@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Removed Google Fonts (Inter / JetBrains Mono) -->
+  <!-- Local NouvelR font face declarations -->
+  <!-- Preload available WOFF (Regular & Bold only to limit early bandwidth) -->
+  <link rel="preload" href="fonts/NouvelRRegular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="fonts/NouvelRBold.woff" as="font" type="font/woff" crossorigin>
+  <style>
+    html,body,#root{font-family:'NouvelR',-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica Neue',Arial,sans-serif;}
+  </style>
+  <link rel="stylesheet" href="nouvelr-fonts.css" />
+    <title>Avatar Viewer</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Optional font-loaded class removed (simplified) -->
+    <script>
+      // Viewport height fix for certain Android WebViews (not scaling layout, just diagnostic)
+      (function(){
+        function setVH(){
+          var vh = window.innerHeight * 0.01;
+          document.documentElement.style.setProperty('--vh', vh + 'px');
+        }
+        setVH();
+        window.addEventListener('resize', setVH);
+      })();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

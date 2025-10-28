@@ -1,0 +1,81 @@
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-right: 4px; /* keep scrollbars off layout */
+}
+
+.wishlist-grid-wrap {
+  flex: 1;
+  overflow: auto;
+}
+
+/* Card is intentionally large to match 1800x720 layout and big-UI style */
+.wishlist-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 260px;
+  min-width: 0; /* allow shrink within grid */
+  position: relative;
+  overflow: hidden;
+}
+
+.wishlist-image {
+  margin-bottom: 12px;
+}
+
+.wishlist-img {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.wishlist-title {
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 6px 0 4px 0;
+}
+
+.wishlist-price {
+  color: #4f46e5;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 4px 0 14px 0;
+}
+
+.wishlist-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto; /* push to bottom */
+}
+
+/* Make sure buttons are large and consistent with the rest of the app */
+.wishlist-card .purchase-btn,
+.wishlist-card .wishlist-btn {
+  padding: 14px 22px;
+  font-size: 1.15rem;
+  border-radius: 14px;
+}
+
+/* Responsive fallback for narrower viewports inside fixed root */
+@media (max-width: 1700px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+}

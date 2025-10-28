@@ -1,0 +1,130 @@
+.main-page {
+  width: 1800px;
+  height: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  box-sizing: border-box;
+  margin: auto;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+}
+
+
+.header {
+  text-align: center;
+}
+
+.app-title {
+  font-size: 4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(79, 70, 229, 0.5);
+}
+
+.app-subtitle {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin: 10px 0 0 0;
+  font-weight: 300;
+}
+
+.main-options {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.option-card {
+  width: 520px;
+  height: 360px;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.option-card:hover::before {
+  opacity: 0.1;
+}
+
+.option-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  border-color: #4f46e5;
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+}
+
+.option-icon {
+  font-size: 4.4rem;
+  margin-bottom: 12px;
+  z-index: 2;
+  position: relative;
+}
+
+.option-card h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px 0;
+  z-index: 2;
+  position: relative;
+}
+
+.option-card p {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin: 2px 2px 13px 2px;
+  z-index: 2;
+  position: relative;
+}
+
+.gender-selection {
+  display: flex;
+  gap: 20px;
+}
+
+.gender-btn {
+  background-color: #2a2a2a;
+  border: 2px solid #4f46e5;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  width: 120px;
+}
+
+.gender-btn.active {
+  background-color: #4f46e5;
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+}
+
+/* removed accessories section styles; accessories is now a main option card */

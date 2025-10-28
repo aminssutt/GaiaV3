@@ -1,0 +1,77 @@
+/* Reverted: removing experimental scaling import to restore stable fixed layout */
+
+.app {
+  width: 1800px;
+  height: 720px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-ui, 'NouvelR', sans-serif);
+  font-feature-settings: 'cv11', 'cv02', 'cv03', 'cv04';
+  font-optical-sizing: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: when testing on desktop large monitors, you can force fixed layout by adding a class */
+/* Legacy helper retained (now redundant since .app is fixed) */
+.app.fixed-1800x720 { width: 1800px; height: 720px; }
+
+/* Animations globales */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.6); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.glow {
+  animation: glow 2s infinite;
+}
+
+/* Shared floating Bluetooth connect button (only rendered on main page) */
+.bluetooth-connect-btn {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  color: #fff;
+  border: 2px solid #3b82f6;
+  padding: 10px 20px 10px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: .35px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  transition: .3s ease;
+  backdrop-filter: blur(4px);
+}
+.bluetooth-connect-btn .bt-icon { filter: drop-shadow(0 0 4px rgba(255,255,255,0.4)); }
+.bluetooth-connect-btn:hover { transform: translateY(-5px) scale(1.035); box-shadow:0 16px 40px rgba(0,0,0,0.55); }
+.bluetooth-connect-btn:active { transform: translateY(-2px) scale(1.01); }

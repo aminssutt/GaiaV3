@@ -1,0 +1,23 @@
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import AvatarViewer from '../components/AvatarViewer';
+import '../pages/Accessories.css';
+
+export default function ShoesAvatarPreview({ onNavigate, gender = 'male' }) {
+  return (
+    <div className="accessories-page fade-in" style={{ paddingTop: '20px' }}>
+      <div className="accessories-header">
+        <button className="back-btn" onClick={() => onNavigate('shoesPreview')}>← Back</button>
+        <h1>Shoes Massage On Avatar</h1>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Canvas style={{ width: '650px', height: '520px', background: 'transparent' }} gl={{ alpha: true }} camera={{ position: [2.2, 1.2, 4.2], fov: 50 }}>
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[8, 10, 5]} intensity={1} />
+          <directionalLight position={[-8, -6, -4]} intensity={0.35} />
+          <AvatarViewer gender={gender} showShoesAccessory />
+        </Canvas>
+      </div>
+    </div>
+  );
+}

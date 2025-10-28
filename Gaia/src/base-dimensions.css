@@ -1,0 +1,32 @@
+:root {
+  /* Base dashboard reference size (design target) */
+  --base-width: 1800; /* px */
+  --base-height: 720; /* px */
+  /* Dynamic scale factors relative to current viewport */
+  --scale-x: calc(100vw / var(--base-width));
+  --scale-y: calc(100vh / var(--base-height));
+  /* Choose the limiting factor to preserve aspect ratio if needed */
+  --scale-uniform: min(var(--scale-x), var(--scale-y));
+}
+
+/* Utility class to wrap any fixed-size layout and scale it uniformly while keeping crisp UI. */
+.scaled-dashboard-wrapper {
+  width: var(--base-width)px;
+  height: var(--base-height)px;
+  transform-origin: top left;
+  /* Scale only if viewport smaller than design to avoid unnecessary upscaling blur */
+  --apply-scale: min(1, var(--scale-uniform));
+  transform: scale(var(--apply-scale));
+  position: relative;
+}
+
+/* Optional helper to center the scaled wrapper */
+.scaled-dashboard-centerer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

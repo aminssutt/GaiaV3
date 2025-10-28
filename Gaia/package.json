@@ -1,0 +1,37 @@
+{
+  "name": "gaia",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "homepage": "https://aminssutt.github.io/Gaia",
+  "scripts": {
+    "dev": "vite",
+  "build": "vite build",
+  "postbuild": "node scripts/copy404.js && node scripts/copyStatic3d.js && node scripts/copyImages.js && node scripts/copyFonts.js",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "deploy:worktree": "node scripts/deploy-worktree.js",
+    "build:docs": "rimraf docs && npm run build && copy dist\\index.html docs\\index.html"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.158.0",
+    "@react-three/fiber": "^8.15.12",
+    "@react-three/drei": "^9.88.13",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "gh-pages": "^6.0.0",
+    "vite": "^5.0.8"
+  }
+}

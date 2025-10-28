@@ -1,0 +1,65 @@
+/* NouvelR font faces
+   NOTE: Place the downloaded font files into /public/fonts/nouvelr/
+   (e.g. public/fonts/nouvelr/NouvelR-Regular.woff2, etc.)
+   Adjust file names if they differ. */
+
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRLight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRBook.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRRegular.woff') format('woff');
+  font-weight: 500; /* treat regular as medium if needed */
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRSemibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NouvelR';
+  src: url('./fonts/NouvelRExtrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Keep fallback system fonts but remove explicit Inter so change is visible */
+:root {
+  --font-ui: 'NouvelR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Global enforcement */
+html, body, .app, #root, button, input, textarea, select {
+  font-family: var(--font-ui) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility class if we need to force it inside shadow roots or external libs */
+.font-ui { font-family: var(--font-ui) !important; }
+
+/* Optional: reduce layout shift by pre-setting font metrics override (commented out until metrics known) */
+/* @font-face { font-family:'NouvelR'; ascent-override:95%; descent-override:20%; line-gap-override:0%; } */

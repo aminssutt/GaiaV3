@@ -1,0 +1,114 @@
+.exercise-detail-page {
+  width: 100%;
+  height: 100%; /* fixed dashboard container (720px from .app) */
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  padding: 20px;
+  color: white;
+  overflow: hidden; /* prevent accidental outer scroll */
+}
+
+.exercise-detail-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.exercise-detail-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff; /* fallback */
+  margin: 0;
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .exercise-detail-header h1 {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.exercise-detail-content {
+  display: flex;
+  gap: 30px;
+  flex: 1;
+  min-height: 0; /* allow children with overflow to size correctly */
+  overflow: hidden; /* contain scroll inside columns */
+}
+
+.video-player-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* fill available content height */
+  min-height: 0; /* enable iframe to shrink if needed */
+}
+
+.instructions-container {
+  flex: 1;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 20px;
+  padding: 30px;
+  border: 2px solid #333;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; /* allow internal scroll */
+}
+
+.instructions-container h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #4f46e5;
+  padding-bottom: 10px;
+}
+
+.instructions-container p {
+  font-size: 1.15rem;
+  color: #a0a0a0;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.instructions-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.instructions-container li {
+  font-size: 1.15rem;
+  color: #d1d5db;
+  margin-bottom: 15px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.instructions-container li::before {
+  content: '✓';
+  color: #4f46e5;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Removed vh based sizing to avoid clipping in Android 9 WebView */
+
+/* Explicit 1800x720 dashboard tuning */
+@media screen and (min-width:1700px) and (max-width:1900px) and (min-height:680px) and (max-height:760px) {
+  .exercise-detail-page { padding: 20px 36px 20px; }
+  .exercise-detail-header { margin-bottom: 16px; }
+  .exercise-detail-header h1 { font-size: 2.4rem; }
+  .exercise-detail-content { gap: 24px; align-items: stretch; }
+  /* Both columns just stretch fully; scroll handled inside each */
+  .video-player-container, .instructions-container { height: 100%; max-height: none; }
+  .instructions-container { padding: 26px; }
+  .instructions-container ul { margin: 0; }
+  .instructions-container li { margin-bottom: 12px; }
+}

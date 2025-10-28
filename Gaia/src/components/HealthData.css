@@ -1,0 +1,118 @@
+.health-data-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.health-data-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.health-data-card.warning::before {
+  opacity: 0.1;
+}
+
+.health-data-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.health-data-card.warning {
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.health-data-card.normal {
+  border-color: #10b981;
+}
+
+.health-data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  z-index: 2;
+  position: relative;
+}
+
+.health-data-header h3 {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.normal {
+  background: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.status-indicator.warning {
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.health-data-value {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 15px;
+  z-index: 2;
+  position: relative;
+}
+
+.value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.unit {
+  font-size: 1rem;
+  color: #a0a0a0;
+  font-weight: 500;
+}
+
+.health-data-bar {
+  width: 100%;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+  z-index: 2;
+  position: relative;
+}
+
+.health-data-progress {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.health-data-progress.normal {
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.health-data-progress.warning {
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
