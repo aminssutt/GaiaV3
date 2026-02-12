@@ -22,3 +22,4 @@ export default function NeckAvatarPreview({ onNavigate, gender = 'male' }) {
     </div>
   );
 }
+

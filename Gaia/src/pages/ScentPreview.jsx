@@ -38,3 +38,4 @@ export default function ScentPreview({ onNavigate }) {
     </div>
   );
 }
+

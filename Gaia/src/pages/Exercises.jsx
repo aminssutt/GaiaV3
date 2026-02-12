@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Exercises.css';
-import UserInfoPopup from '../components/UserInfoPopup';
-import { hasUserInfo, saveUserInfo } from '../utils/userDataUtils';
 
 // Import emoji images
 import neckEmoji from '../../images/emojis/neck.png';
@@ -27,22 +25,7 @@ function Exercises({ onNavigate, onGenderChange }) {
   const [sliding, setSliding] = useState(false)
   const [direction, setDirection] = useState('left') // 'left' | 'right'
   const [paused, setPaused] = useState(false)
-  const [showUserInfoPopup, setShowUserInfoPopup] = useState(false)
   const pageSize = 4
-
-  // Check if user info exists in localStorage on mount
-  useEffect(() => {
-    if (!hasUserInfo()) {
-      // Show popup if no user info exists
-      setShowUserInfoPopup(true);
-    }
-  }, []);
-
-  const handleUserInfoConfirm = (userInfo) => {
-    // Save user info using utility function
-    saveUserInfo(userInfo);
-    console.log('User info saved:', userInfo);
-  };
   const visible = items.slice(0, pageSize)
   const nextItem = items[pageSize]
   const prevItem = items[items.length - 1]
@@ -101,17 +84,7 @@ function Exercises({ onNavigate, onGenderChange }) {
   };
 
   return (
-    <>
-      {showUserInfoPopup && (
-        <UserInfoPopup
-          isVisible={showUserInfoPopup}
-          onClose={() => setShowUserInfoPopup(false)}
-          onConfirm={handleUserInfoConfirm}
-          onGenderChange={onGenderChange}
-        />
-      )}
-      
-      <div className="exercises-page fade-in">
+    <div className="exercises-page fade-in">
         <div className="exercises-header">
           <button className="back-btn" onClick={() => onNavigate('main')}>
             ← Back
@@ -179,7 +152,6 @@ function Exercises({ onNavigate, onGenderChange }) {
         </div>
       </div>
     </div>
-    </>
   );
 }
 

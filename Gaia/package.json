@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
   "build": "vite build",
+  "build:bench": "vite build --config vite.config.bench.js && xcopy public\\avatars dist-bench\\avatars\\ /E /I /Y && xcopy public\\fonts dist-bench\\fonts\\ /E /I /Y && xcopy images dist-bench\\images\\ /E /I /Y && copy public\\bench-config.js dist-bench\\bench-config.js",
   "postbuild": "node scripts/copy404.js && node scripts/copyStatic3d.js && node scripts/copyImages.js && node scripts/copyFonts.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

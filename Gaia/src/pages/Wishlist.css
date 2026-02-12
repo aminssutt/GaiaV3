@@ -45,7 +45,7 @@
 }
 
 .wishlist-price {
-  color: #4f46e5;
+  color: #6b5b7a;
   font-size: 1.4rem;
   font-weight: 700;
   margin: 4px 0 14px 0;
@@ -79,3 +79,4 @@
     grid-template-columns: 1fr;
   }
 }
+

@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+import org.gradle.internal.os.OperatingSystem
+
+android {
+    namespace = "com.dms.monitor"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.dms.monitor"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Use Gaia frontend instead of dms-app frontend in the WebView:
+// Copies ../../../../Gaia/dist-bench (preferred) or ../../../../Gaia/dist into
+// cameratest/dms-app/dist BEFORE packaging the APK.
+// -----------------------------------------------------------------------------
+tasks.register("syncGaiaFrontend", Exec) {
+    workingDir "$rootDir/.."
+
+    def isWindows = OperatingSystem.current().isWindows()
+    if (isWindows) {
+        commandLine "cmd", "/c", "node scripts\\syncGaiaFrontend.mjs"
+    } else {
+        commandLine "node", "scripts/syncGaiaFrontend.mjs"
+    }
+}
+
+// After updating webDir (dist/), ensure Capacitor copies it into
+// android/app/src/main/assets/public (this is what the APK actually loads).
+tasks.register("capacitorCopyWeb", Exec) {
+    workingDir "$rootDir/.."
+
+    def isWindows = OperatingSystem.current().isWindows()
+    if (isWindows) {
+        commandLine "cmd", "/c", "npx cap copy android"
+    } else {
+        commandLine "npx", "cap", "copy", "android"
+    }
+}
+
+tasks.named("capacitorCopyWeb").configure { dependsOn(tasks.named("syncGaiaFrontend")) }
+
+// Make sure the APK bundles the updated Gaia web assets
+preBuild.dependsOn(tasks.named("capacitorCopyWeb"))
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

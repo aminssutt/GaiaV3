@@ -86,7 +86,7 @@
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #6b5b7a, #8b7a9e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -147,7 +147,7 @@
 
 .input-group input:focus {
   outline: none;
-  border-color: #4f46e5;
+  border-color: #6b5b7a;
   background: rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
@@ -219,7 +219,7 @@
 }
 
 .btn-confirm {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #6b5b7a, #8b7a9e);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 }
@@ -265,8 +265,8 @@
 }
 
 .gender-btn.active {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  border-color: #4f46e5;
+  background: linear-gradient(135deg, #6b5b7a, #8b7a9e);
+  border-color: #6b5b7a;
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 }
@@ -291,3 +291,5 @@
     width: 100%;
   }
 }
+
+

@@ -1,0 +1,435 @@
+/* FaceID Modal Styles */
+
+.faceid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(10px);
+}
+
+.faceid-modal {
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 24px;
+  padding: 30px;
+  border: 2px solid #0f3460;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(79, 70, 229, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.faceid-modal.enrollment {
+  max-width: 450px;
+}
+
+.faceid-header h2 {
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.faceid-header p {
+  color: #8892b0;
+  font-size: 0.95rem;
+  margin: 0 0 20px 0;
+}
+
+/* Camera Container */
+.faceid-camera-container {
+  position: relative;
+  width: 280px;
+  height: 210px;
+  margin: 0 auto 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0a0a0f;
+}
+
+.faceid-camera {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.faceid-camera.success {
+  filter: saturate(1.2) brightness(1.1);
+}
+
+.faceid-camera.failed {
+  filter: saturate(0.7) brightness(0.9);
+}
+
+.faceid-camera.verifying {
+  animation: scanPulse 1s ease-in-out infinite;
+}
+
+/* Face Detection Frame */
+.faceid-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 200px;
+  pointer-events: none;
+}
+
+.frame-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #4f46e5;
+  transition: border-color 0.3s ease;
+}
+
+.faceid-frame.success .frame-corner {
+  border-color: #10b981;
+}
+
+.faceid-frame.failed .frame-corner {
+  border-color: #ef4444;
+}
+
+.faceid-frame.verifying .frame-corner {
+  animation: framePulse 1s ease-in-out infinite;
+}
+
+.frame-corner.top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 12px 0 0 0;
+}
+
+.frame-corner.top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 12px 0 0;
+}
+
+.frame-corner.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 12px;
+}
+
+.frame-corner.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 12px 0;
+}
+
+/* Status Section */
+.faceid-status {
+  margin: 20px 0;
+}
+
+.faceid-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.faceid-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.faceid-icon.scanning {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+.faceid-icon.scanning svg {
+  color: white;
+}
+
+.faceid-icon.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.faceid-icon.success svg {
+  color: white;
+}
+
+.faceid-icon.failed {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.faceid-icon.failed svg {
+  color: white;
+}
+
+.status-message {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #e0e6ed;
+}
+
+.status-message.success {
+  color: #10b981;
+}
+
+.status-message.failed {
+  color: #ef4444;
+}
+
+.status-message.verifying,
+.status-message.analyzing {
+  color: #4f46e5;
+}
+
+.similarity {
+  font-size: 0.9rem;
+  color: #8892b0;
+  margin: 8px 0 0;
+}
+
+.confidence-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: white;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attempts {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+
+/* Scanning Overlay */
+.scanning-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(79, 70, 229, 0.8) 50%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 15px 3px rgba(79, 70, 229, 0.5);
+  animation: scanMove 2s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+  0%, 100% {
+    top: 10%;
+  }
+  50% {
+    top: 90%;
+  }
+}
+
+/* Verification Progress */
+.verification-progress {
+  margin: 15px 0;
+  padding: 0 10px;
+}
+
+.verification-progress .progress-bar {
+  height: 6px;
+  background: rgba(79, 70, 229, 0.2);
+}
+
+.verification-progress .progress-fill.analyzing {
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  animation: progressPulse 1s ease-in-out infinite;
+}
+
+@keyframes progressPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Enrollment Progress */
+.enrollment-progress {
+  margin: 15px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 50%, #10b981 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #8892b0;
+  margin: 8px 0 0;
+}
+
+/* Frame status for analyzing */
+.faceid-frame.analyzing .frame-corner {
+  animation: framePulse 0.8s ease-in-out infinite;
+}
+
+/* Action Buttons */
+.faceid-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: none;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+}
+
+.btn-retry {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-retry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 2px solid #475569;
+  color: #94a3b8;
+  padding: 12px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Animations */
+@keyframes scanPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes framePulse {
+  0%, 100% {
+    border-color: #4f46e5;
+  }
+  50% {
+    border-color: #7c3aed;
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(79, 70, 229, 0.2);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .faceid-modal {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  .faceid-camera-container {
+    width: 240px;
+    height: 180px;
+  }
+
+  .faceid-frame {
+    width: 140px;
+    height: 170px;
+  }
+
+  .faceid-header h2 {
+    font-size: 1.4rem;
+  }
+}

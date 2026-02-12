@@ -26,7 +26,7 @@ function InteractivePoint({ position, label, onShowConfirmation }) {
     >
       <sphereGeometry args={[0.07, 14, 14]} />
       <meshBasicMaterial
-        color={hovered ? '#ff6b6b' : '#4f46e5'}
+        color={hovered ? '#ff6b6b' : '#6b5b7a'}
         transparent
         opacity={hovered ? 1 : 0.7}
         depthTest={false}
@@ -36,3 +36,4 @@ function InteractivePoint({ position, label, onShowConfirmation }) {
 }
 
 export default InteractivePoint;
+

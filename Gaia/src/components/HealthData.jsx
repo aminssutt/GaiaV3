@@ -23,3 +23,4 @@ function HealthData({ title, value, unit, status }) {
 }
 
 export default HealthData
+

@@ -40,3 +40,4 @@ export default function InCarPreview({ onNavigate, accessoryName }) {
     </div>
   );
 }
+

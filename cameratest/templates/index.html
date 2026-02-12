@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1800, height=720">
+    <title>DMS Monitor - Vehicle Bench</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1800px;
+            height: 720px;
+            background: #0a0a0f;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            width: 1800px;
+            height: 720px;
+        }
+        
+        /* Camera Feed */
+        .camera-section {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            background: #000;
+        }
+        
+        .camera-feed {
+            width: 1280px;
+            height: 720px;
+            object-fit: cover;
+        }
+        
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0,255,204,0.5);
+        }
+        
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(0,255,100,0.2);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+        }
+        
+        .status-inactive {
+            background: rgba(255,100,100,0.2);
+            color: #ff6464;
+            border: 1px solid #ff6464;
+        }
+        
+        /* Metrics Panel */
+        .metrics-panel {
+            width: 520px;
+            height: 720px;
+            background: linear-gradient(135deg, #12121a 0%, #1a1a2e 100%);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .panel-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ffcc;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #00ffcc33;
+            margin-bottom: 5px;
+        }
+        
+        .metrics-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .metric-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border-left: 4px solid #00ffcc;
+        }
+        
+        .metric-card.warning {
+            border-left-color: #ffaa00;
+            background: rgba(255,170,0,0.1);
+        }
+        
+        .metric-card.danger {
+            border-left-color: #ff4444;
+            background: rgba(255,68,68,0.15);
+            animation: pulse-danger 1s infinite;
+        }
+        
+        @keyframes pulse-danger {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .metric-value.good { color: #00ff64; }
+        .metric-value.warning { color: #ffaa00; }
+        .metric-value.danger { color: #ff4444; }
+        
+        .metric-row {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .metric-row .metric-card {
+            flex: 1;
+        }
+        
+        .metric-small .metric-value {
+            font-size: 22px;
+        }
+        
+        /* Alert Banner */
+        .alert-banner {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: blink 0.5s infinite;
+        }
+        
+        .alert-banner.drowsy {
+            display: block;
+            background: rgba(255,0,0,0.9);
+            color: #fff;
+        }
+        
+        .alert-banner.distracted {
+            display: block;
+            background: rgba(255,170,0,0.9);
+            color: #000;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Head Pose Visualization */
+        .pose-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+        
+        .pose-item {
+            text-align: center;
+        }
+        
+        .pose-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .pose-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        /* Connection Status */
+        .connection-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .connection-dot.connected {
+            background: #00ff64;
+            box-shadow: 0 0 10px #00ff64;
+        }
+        
+        .connection-dot.disconnected {
+            background: #ff4444;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 11px;
+            color: #444;
+            border-top: 1px solid #ffffff11;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Camera Section -->
+        <div class="camera-section">
+            <img class="camera-feed" id="cameraFeed" src="/video_feed" alt="Camera Feed">
+            
+            <div class="camera-overlay">
+                <div class="logo">🚗 DMS MONITOR</div>
+                <div class="status-badge status-active" id="faceStatus">
+                    <span class="connection-dot connected" id="connectionDot"></span>
+                    FACE DETECTED
+                </div>
+            </div>
+            
+            <div class="alert-banner" id="alertBanner"></div>
+        </div>
+        
+        <!-- Metrics Panel -->
+        <div class="metrics-panel">
+            <div class="panel-title">📊 DRIVER METRICS</div>
+            
+            <div class="metrics-grid">
+                <!-- Eyes Status -->
+                <div class="metric-card" id="eyesCard">
+                    <div class="metric-label">Eyes Status</div>
+                    <div class="metric-value good" id="eyesStatus">OPEN</div>
+                    <div style="font-size: 14px; color: #666; margin-top: 5px;">
+                        EAR: <span id="earValue">0.30</span>
+                    </div>
+                </div>
+                
+                <!-- Blinks Row -->
+                <div class="metric-row">
+                    <div class="metric-card metric-small">
+                        <div class="metric-label">Blinks/min</div>
+                        <div class="metric-value" id="blinksPerMin">0</div>
+                    </div>
+                    <div class="metric-card metric-small">
+                        <div class="metric-label">Total Blinks</div>
+                        <div class="metric-value" id="blinksTotal">0</div>
+                    </div>
+                </div>
+                
+                <!-- PERCLOS -->
+                <div class="metric-card" id="perclosCard">
+                    <div class="metric-label">PERCLOS (Eyes Closed %)</div>
+                    <div class="metric-value" id="perclosValue">0.0%</div>
+                    <div style="background: #333; height: 8px; border-radius: 4px; margin-top: 10px;">
+                        <div id="perclosBar" style="background: #00ff64; height: 100%; width: 0%; border-radius: 4px; transition: all 0.3s;"></div>
+                    </div>
+                </div>
+                
+                <!-- Head Pose -->
+                <div class="metric-card">
+                    <div class="metric-label">Head Pose</div>
+                    <div class="pose-visual">
+                        <div class="pose-item">
+                            <div class="pose-label">PITCH</div>
+                            <div class="pose-value" id="pitchValue">0°</div>
+                        </div>
+                        <div class="pose-item">
+                            <div class="pose-label">YAW</div>
+                            <div class="pose-value" id="yawValue">0°</div>
+                        </div>
+                        <div class="pose-item">
+                            <div class="pose-label">ROLL</div>
+                            <div class="pose-value" id="rollValue">0°</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Yawns -->
+                <div class="metric-card metric-small">
+                    <div class="metric-label">Yawn Count</div>
+                    <div class="metric-value" id="yawnCount">0</div>
+                </div>
+            </div>
+            
+            <button onclick="resetCounters()" style="
+                background: linear-gradient(135deg, #00ffcc, #00aaff);
+                border: none;
+                padding: 12px 30px;
+                border-radius: 8px;
+                color: #000;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                margin-top: auto;
+            ">🔄 RESET COUNTERS</button>
+            
+            <div class="footer">
+                DMS Web Interface v1.0 | 1800×720
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update metrics every 200ms
+        function updateMetrics() {
+            fetch('/metrics')
+                .then(response => response.json())
+                .then(data => {
+                    // Face status
+                    const faceStatus = document.getElementById('faceStatus');
+                    const connectionDot = document.getElementById('connectionDot');
+                    if (data.face_detected) {
+                        faceStatus.className = 'status-badge status-active';
+                        faceStatus.innerHTML = '<span class="connection-dot connected"></span> FACE DETECTED';
+                    } else {
+                        faceStatus.className = 'status-badge status-inactive';
+                        faceStatus.innerHTML = '<span class="connection-dot disconnected"></span> NO FACE';
+                    }
+                    
+                    // Eyes status
+                    const eyesStatus = document.getElementById('eyesStatus');
+                    const eyesCard = document.getElementById('eyesCard');
+                    if (data.eyes_open) {
+                        eyesStatus.textContent = 'OPEN';
+                        eyesStatus.className = 'metric-value good';
+                        eyesCard.className = 'metric-card';
+                    } else {
+                        eyesStatus.textContent = 'CLOSED';
+                        eyesStatus.className = 'metric-value danger';
+                        eyesCard.className = 'metric-card danger';
+                    }
+                    document.getElementById('earValue').textContent = data.ear.toFixed(2);
+                    
+                    // Blinks
+                    const bpm = data.blinks_per_min;
+                    const bpmEl = document.getElementById('blinksPerMin');
+                    bpmEl.textContent = bpm;
+                    if (bpm >= 10) {
+                        bpmEl.className = 'metric-value good';
+                    } else if (bpm >= 5) {
+                        bpmEl.className = 'metric-value warning';
+                    } else {
+                        bpmEl.className = 'metric-value danger';
+                    }
+                    document.getElementById('blinksTotal').textContent = data.blinks_total;
+                    
+                    // PERCLOS
+                    const perclos = data.perclos;
+                    const perclosEl = document.getElementById('perclosValue');
+                    const perclosCard = document.getElementById('perclosCard');
+                    const perclosBar = document.getElementById('perclosBar');
+                    perclosEl.textContent = perclos.toFixed(1) + '%';
+                    perclosBar.style.width = Math.min(100, perclos) + '%';
+                    
+                    if (perclos < 20) {
+                        perclosEl.className = 'metric-value good';
+                        perclosBar.style.background = '#00ff64';
+                        perclosCard.className = 'metric-card';
+                    } else if (perclos < 40) {
+                        perclosEl.className = 'metric-value warning';
+                        perclosBar.style.background = '#ffaa00';
+                        perclosCard.className = 'metric-card warning';
+                    } else {
+                        perclosEl.className = 'metric-value danger';
+                        perclosBar.style.background = '#ff4444';
+                        perclosCard.className = 'metric-card danger';
+                    }
+                    
+                    // Head pose
+                    const pitchEl = document.getElementById('pitchValue');
+                    const yawEl = document.getElementById('yawValue');
+                    const rollEl = document.getElementById('rollValue');
+                    
+                    pitchEl.textContent = data.pitch.toFixed(0) + '°';
+                    yawEl.textContent = data.yaw.toFixed(0) + '°';
+                    rollEl.textContent = data.roll.toFixed(0) + '°';
+                    
+                    pitchEl.style.color = Math.abs(data.pitch) < 20 ? '#00ff64' : '#ffaa00';
+                    yawEl.style.color = Math.abs(data.yaw) < 25 ? '#00ff64' : '#ffaa00';
+                    rollEl.style.color = Math.abs(data.roll) < 15 ? '#00ff64' : '#ffaa00';
+                    
+                    // Yawns
+                    document.getElementById('yawnCount').textContent = data.yawns;
+                    
+                    // Alerts
+                    const alertBanner = document.getElementById('alertBanner');
+                    if (data.drowsy_alert) {
+                        alertBanner.className = 'alert-banner drowsy';
+                        alertBanner.textContent = '⚠️ DROWSINESS DETECTED - WAKE UP!';
+                    } else if (data.distraction_alert) {
+                        alertBanner.className = 'alert-banner distracted';
+                        alertBanner.textContent = '👀 EYES ON THE ROAD!';
+                    } else {
+                        alertBanner.className = 'alert-banner';
+                    }
+                })
+                .catch(err => console.error('Metrics error:', err));
+        }
+        
+        function resetCounters() {
+            fetch('/reset', { method: 'POST' })
+                .then(() => console.log('Counters reset'))
+                .catch(err => console.error('Reset error:', err));
+        }
+        
+        // Start updates
+        setInterval(updateMetrics, 200);
+        updateMetrics();
+    </script>
+</body>
+</html>

@@ -61,7 +61,7 @@ function VideoPlayer({ title, description, videoUrl }) {
         )}
         {src && (
           <div style={{ textAlign: 'right', paddingTop: 6 }}>
-            <a href={src} target="_blank" rel="noreferrer" style={{ color: '#7c3aed', fontSize: 12 }}>
+            <a href={src} target="_blank" rel="noreferrer" style={{ color: '#8b7a9e', fontSize: 12 }}>
               Open video in browser
             </a>
           </div>
@@ -74,3 +74,4 @@ function VideoPlayer({ title, description, videoUrl }) {
 }
 
 export default VideoPlayer
+

@@ -26,3 +26,4 @@ function RecommendationPopup({ message, onClose, onGoToExercises }) {
 }
 
 export default RecommendationPopup
+

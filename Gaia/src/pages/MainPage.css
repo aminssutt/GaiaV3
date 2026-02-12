@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   padding: 20px;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   box-sizing: border-box;
@@ -13,20 +13,136 @@
   top: 0; bottom: 0; left: 0; right: 0;
 }
 
+/* Top Bar - Profile + Logo on same line */
+.top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  margin-bottom: 30px;
+  position: relative;
+}
 
+/* Profile Menu - Top Left */
+.profile-menu-container {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(107, 91, 122, 0.4);
+}
+
+.profile-icon {
+  font-size: 1.2rem;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background: #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  min-width: 180px;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
+}
+
+.dropdown-item span {
+  font-size: 1.1rem;
+}
+
+/* Header with Logo - centered in top bar */
 .header {
   text-align: center;
+}
+
+.header-logo {
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(107, 91, 122, 0.3));
+}
+
+.edit-profile-btn {
+  position: absolute;
+  top: 10px;
+  right: -300px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.edit-profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(107, 91, 122, 0.4);
 }
 
 .app-title {
   font-size: 4rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
-  text-shadow: 0 0 30px rgba(79, 70, 229, 0.5);
+  text-shadow: 0 0 30px rgba(107, 91, 122, 0.5);
 }
 
 .app-subtitle {
@@ -40,13 +156,16 @@
   display: flex;
   gap: 40px;
   justify-content: center;
+  flex: 1;
+  align-items: center;
+  padding-bottom: 30px;
 }
 
 .option-card {
-  width: 520px;
-  height: 360px;
+  width: 540px;
+  height: 520px;
   background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  border-radius: 20px;
+  border-radius: 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +184,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 1;
@@ -77,28 +196,28 @@
 
 .option-card:hover {
   transform: translateY(-10px) scale(1.05);
-  border-color: #4f46e5;
-  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+  border-color: #6b5b7a;
+  box-shadow: 0 20px 40px rgba(107, 91, 122, 0.3);
 }
 
 .option-icon {
-  font-size: 4.4rem;
-  margin-bottom: 12px;
+  font-size: 5.5rem;
+  margin-bottom: 16px;
   z-index: 2;
   position: relative;
 }
 
 .option-card h3 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 600;
   color: #fff;
-  margin: 0 0 4px 0;
+  margin: 0 0 8px 0;
   z-index: 2;
   position: relative;
 }
 
 .option-card p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #a0a0a0;
   margin: 2px 2px 13px 2px;
   z-index: 2;
@@ -112,7 +231,7 @@
 
 .gender-btn {
   background-color: #2a2a2a;
-  border: 2px solid #4f46e5;
+  border: 2px solid #6b5b7a;
   color: white;
   padding: 12px 24px;
   border-radius: 10px;
@@ -123,8 +242,22 @@
 }
 
 .gender-btn.active {
-  background-color: #4f46e5;
-  box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+  background-color: #6b5b7a;
+  box-shadow: 0 0 15px rgba(107, 91, 122, 0.5);
+}
+
+/* FaceID Badge on Option Card */
+.faceid-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.4rem;
+  z-index: 10;
+  background: rgba(79, 70, 229, 0.2);
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(79, 70, 229, 0.4);
 }
 
 /* removed accessories section styles; accessories is now a main option card */
+

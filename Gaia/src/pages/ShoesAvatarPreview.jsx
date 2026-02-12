@@ -21,3 +21,4 @@ export default function ShoesAvatarPreview({ onNavigate, gender = 'male' }) {
     </div>
   );
 }
+

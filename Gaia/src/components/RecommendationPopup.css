@@ -18,7 +18,7 @@
   padding: 30px;
   max-width: 500px;
   width: 90%;
-  border: 2px solid #4f46e5;
+  border: 2px solid #6b5b7a;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   position: relative;
 }
@@ -30,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
   opacity: 0.1;
   border-radius: 20px;
   z-index: 1;
@@ -111,7 +111,7 @@
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #6b5b7a 0%, #8b7a9e 100%);
   color: #fff;
 }
 
@@ -119,3 +119,4 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
 }
+

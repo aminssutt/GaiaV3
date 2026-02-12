@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "GaiaExpo",
+    "slug": "GaiaExpo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gaiahealth.mobile",
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "GAIA needs access to your health data to sync with your in-car dashboard for personalized wellness recommendations.",
+        "NSHealthUpdateUsageDescription": "GAIA needs access to your health data to provide real-time health monitoring.",
+        "NSHealthClinicalHealthRecordsShareUsageDescription": "GAIA uses health data for in-car wellness features.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": [
+          "health-records",
+          "health-records"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3da8b0bc-d1c0-41e8-bf10-5b1d1a7792ad"
+      }
+    }
+  }
+}

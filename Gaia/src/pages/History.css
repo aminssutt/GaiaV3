@@ -9,7 +9,7 @@
 /* Header */
 .history-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .history-header-left { display:flex; align-items:center; gap:18px; }
-.history-header-left h1 { margin:0; font-size:3rem; font-weight:700; background:linear-gradient(135deg,#4f46e5,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.history-header-left h1 { margin:0; font-size:3rem; font-weight:700; background:linear-gradient(135deg,#6b5b7a,#8b7a9e); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .history-range-buttons { display:flex; gap:8px; }
 .history-range-buttons .back-btn.mini { padding:10px 16px; font-size:.85rem; border-radius:20px; }
 .history-range-buttons .back-btn.danger { background:linear-gradient(135deg,#dc2626,#b91c1c); box-shadow:0 4px 12px rgba(220,38,38,.35); }
@@ -30,7 +30,7 @@
 .history-right { flex:1; display:flex; flex-direction:column; min-width:0; min-height:0; }
 .history-metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:120px; gap:14px; margin-bottom:12px; }
 .metric-tile { background:linear-gradient(135deg,#1f2937,#374151); border:2px solid #2f3542; border-radius:16px; padding:14px 16px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:6px; cursor:pointer; transition:.25s; position:relative; overflow:hidden; }
-.metric-tile.active { border-color:#4f46e5; box-shadow:0 0 0 1px rgba(79,70,229,.4),0 6px 18px rgba(0,0,0,.5); }
+.metric-tile.active { border-color:#6b5b7a; box-shadow:0 0 0 1px rgba(79,70,229,.4),0 6px 18px rgba(0,0,0,.5); }
 .metric-tile:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.55); }
 .metric-icon { font-size:1.8rem; }
 .metric-label { font-size:1.05rem; font-weight:600; color:#fff; }
@@ -45,7 +45,7 @@
 /* Scrollbar */
 .reco-list::-webkit-scrollbar { width:6px; }
 .reco-list::-webkit-scrollbar-track { background:rgba(255,255,255,0.05); border-radius:6px; }
-.reco-list::-webkit-scrollbar-thumb { background:linear-gradient(#4f46e5,#7c3aed); border-radius:6px; }
+.reco-list::-webkit-scrollbar-thumb { background:linear-gradient(#6b5b7a,#8b7a9e); border-radius:6px; }
 
 @media (max-width:1800px) and (max-height:720px) {
   .metric-tile { padding:12px 14px; }

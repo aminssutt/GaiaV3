@@ -19,7 +19,7 @@ function toSeries(data) {
 }
 
 const metrics = [
-  { key: 'heartBeat', label: 'Heart Beat', unit: 'bpm', color: '#4f46e5', icon: '❤️' },
+  { key: 'heartBeat', label: 'Heart Beat', unit: 'bpm', color: '#6b5b7a', icon: '❤️' },
   { key: 'tension', label: 'Blood Pressure', unit: 'mmHg', color: '#f59e0b', icon: '🩺' },
   { key: 'temperature', label: 'Temperature', unit: '°C', color: '#ef4444', icon: '🌡️' },
   { key: 'fatigue', label: 'Fatigue', unit: '%', color: '#10b981', icon: '😮‍💨' },
@@ -115,3 +115,4 @@ export default function History({ onNavigate, data = [], popups = [] }) {
     </div>
   );
 }
+

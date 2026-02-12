@@ -19,65 +19,86 @@ def generate_recommendations(user_data):
     
     Args:
         user_data (dict): Dictionary containing:
-            - personal: {age, height, weight}
-            - healthAverages: {heartBeat, tension, temperature, fatigue, cough, ambiance}
+            - personal: {age, height, weight} (optional)
+            - healthAverages: {steps, calories, distance, sleepDuration, heartBeat}
+            - googleFitData: {steps, calories, distance, sleepDuration, heartRate}
     
     Returns:
         str: AI-generated recommendations
     """
     # Extract data
-    age = user_data['personal']['age']
-    height = user_data['personal']['height']
-    weight = user_data['personal']['weight']
-    gender = user_data['personal'].get('gender', 'male')  # Default to 'male' if not provided
+    personal = user_data.get('personal', {})
+    age = personal.get('age')
+    height = personal.get('height')
+    weight = personal.get('weight')
+    gender = personal.get('gender', 'male')
     
-    health = user_data['healthAverages']
-    heart_rate = health['heartBeat']
-    blood_pressure = health['tension']
-    temperature = health['temperature']
-    fatigue = health['fatigue']
-    cough = health['cough']
-    ambient_noise = health['ambiance']
+    # Extract Google Fit data (prioritize googleFitData if available)
+    google_fit = user_data.get('googleFitData', {})
+    health = user_data.get('healthAverages', {})
     
-    # Calculate BMI
-    height_m = height / 100
-    bmi = weight / (height_m ** 2)
+    steps = google_fit.get('steps') or health.get('steps', 0)
+    calories = google_fit.get('calories') or health.get('calories', 0)
+    distance = google_fit.get('distance') or health.get('distance', 0)
+    sleep_duration = google_fit.get('sleepDuration') or health.get('sleepDuration', 0)
+    heart_rate = google_fit.get('heartRate') or health.get('heartBeat')
+    
+    # Calculate BMI if height and weight available
+    bmi = None
+    if height and weight:
+        height_m = height / 100
+        bmi = weight / (height_m ** 2)
     
     # Gender-specific normal ranges
     gender_label = "Male" if gender == 'male' else "Female"
-    heart_rate_normal = "60-100 bpm" if gender == 'male' else "65-105 bpm (slightly higher for females)"
+    
+    # Build profile section
+    profile_lines = [f"- Gender: {gender_label}"]
+    if age:
+        profile_lines.append(f"- Age: {age} years old")
+    if height:
+        profile_lines.append(f"- Height: {height} cm")
+    if weight:
+        profile_lines.append(f"- Weight: {weight} kg")
+    if bmi:
+        profile_lines.append(f"- BMI: {bmi:.1f}")
+    
+    profile_section = "\n".join(profile_lines) if profile_lines else "- Profile data from Google Fit"
     
     # Build comprehensive prompt
-    prompt = f"""Based on the following user data and comparing it to normal adult population averages:
+    prompt = f"""Based on the following user data from Google Fit:
 
 USER PROFILE:
-- Gender: {gender_label}
-- Age: {age} years old
-- Height: {height} cm
-- Weight: {weight} kg
-- BMI: {bmi:.1f}
+{profile_section}
 
-AVERAGE HEALTH METRICS (collected from user monitoring):
-- Heart Rate: {heart_rate} bpm (Normal: {heart_rate_normal})
-- Blood Pressure: {blood_pressure} mmHg (Normal: 90-120 mmHg)
-- Body Temperature: {temperature}°C (Normal: 36.5-37.5°C)
-- Fatigue Level: {fatigue}% (Lower is better)
-- Cough Frequency: {cough}% (Lower is better)
-- Ambient Noise Exposure: {ambient_noise} dB (Normal: <60 dB)
+GOOGLE FIT ACTIVITY METRICS (last 24 hours average):
+- Daily Steps: {steps:,} steps (Recommended: 10,000 steps/day)
+- Calories Burned: {calories} kcal
+- Distance: {distance} km
+- Sleep Duration: {sleep_duration} hours (Recommended: 7-9 hours)"""
+    
+    # Add heart rate if available
+    if heart_rate:
+        prompt += f"\n- Heart Rate: {heart_rate} bpm (Normal: 60-100 bpm)"
+    
+    # Continue the prompt
+    gender_context = "Women typically need more iron, calcium, and specific hormonal health considerations" if gender == 'female' else "Men typically need more cardiovascular focus and muscle mass maintenance"
+    
+    prompt += f"""
 
 IMPORTANT CONTEXT:
 - Consider gender-specific health needs and fitness recommendations
-- {"Women typically need more iron, calcium, and specific hormonal health considerations" if gender == 'female' else "Men typically need more cardiovascular focus and muscle mass maintenance"}
-- Adjust exercise intensity recommendations based on gender and age
+- {gender_context}
+- Focus on improving daily activity levels, sleep quality, and overall wellness
 
 TASK:
-Please provide personalized health and fitness recommendations in THREE categories.
+Please provide personalized health and fitness recommendations in THREE categories based on the Google Fit data above.
 
 IMPORTANT: This is for a vehicle dashboard display (1800x720px), so be CONCISE.
 - Maximum 3-4 bullet points per category
 - Each bullet point should be ONE short, actionable sentence (max 15 words)
 - Be direct and specific
-- Consider the user's gender in your recommendations
+- Base recommendations on the actual activity data (steps, sleep, calories)
 
 Format your response EXACTLY like this:
 
@@ -87,7 +108,7 @@ HEALTH RECOMMENDATIONS:
 • [Short actionable health advice]
 
 FITNESS RECOMMENDATIONS:
-• [Short actionable exercise advice]
+• [Short actionable exercise advice based on steps/distance]
 • [Short actionable exercise advice]
 • [Short actionable exercise advice]
 

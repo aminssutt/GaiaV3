@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550">
+  <defs>
+    <linearGradient id="mobileGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="serverGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f093fb"/>
+      <stop offset="100%" style="stop-color:#f5576c"/>
+    </linearGradient>
+    <linearGradient id="dashGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4facfe"/>
+      <stop offset="100%" style="stop-color:#00f2fe"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Titre -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#333">Diagramme de Séquence : Synchronisation</text>
+  
+  <!-- Acteurs (headers) -->
+  <!-- Smartphone -->
+  <rect x="80" y="50" width="140" height="45" rx="10" fill="url(#mobileGrad2)"/>
+  <text x="150" y="78" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="white">📱 Smartphone</text>
+  
+  <!-- Backend -->
+  <rect x="330" y="50" width="140" height="45" rx="10" fill="url(#serverGrad2)"/>
+  <text x="400" y="78" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="white">🖥️ Backend Flask</text>
+  
+  <!-- Dashboard -->
+  <rect x="580" y="50" width="140" height="45" rx="10" fill="url(#dashGrad2)"/>
+  <text x="650" y="78" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="white">🚗 Dashboard</text>
+  
+  <!-- Lignes de vie -->
+  <line x1="150" y1="95" x2="150" y2="520" stroke="#667eea" stroke-width="2" stroke-dasharray="8,4"/>
+  <line x1="400" y1="95" x2="400" y2="520" stroke="#f5576c" stroke-width="2" stroke-dasharray="8,4"/>
+  <line x1="650" y1="95" x2="650" y2="520" stroke="#4facfe" stroke-width="2" stroke-dasharray="8,4"/>
+  
+  <!-- Étape 1: Collecte Samsung Health -->
+  <rect x="90" y="115" width="120" height="35" rx="5" fill="#f3e5f5"/>
+  <text x="150" y="137" text-anchor="middle" font-family="Arial" font-size="10" fill="#7b1fa2">Collecte données</text>
+  <text x="150" y="148" text-anchor="middle" font-family="Arial" font-size="9" fill="#9c27b0">Samsung Health</text>
+  
+  <!-- Étape 2: Sync vers backend -->
+  <line x1="150" y1="165" x2="385" y2="195" stroke="#667eea" stroke-width="2"/>
+  <polygon points="385,195 375,188 375,202" fill="#667eea"/>
+  
+  <rect x="200" y="168" width="140" height="25" rx="4" fill="#ede7f6"/>
+  <text x="270" y="184" text-anchor="middle" font-family="Arial" font-size="9" fill="#5e35b1">POST /api/sync-health</text>
+  
+  <!-- Payload -->
+  <rect x="180" y="195" width="180" height="55" rx="5" fill="#fff8e1" stroke="#ffc107"/>
+  <text x="270" y="212" text-anchor="middle" font-family="Arial" font-size="9" font-weight="bold" fill="#f57f17">Payload JSON</text>
+  <text x="270" y="226" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">{userId, timestamp,</text>
+  <text x="270" y="238" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">heartRate, steps, sleep...}</text>
+  
+  <!-- Étape 3: Stockage backend -->
+  <rect x="340" y="260" width="120" height="40" rx="5" fill="#fce4ec"/>
+  <text x="400" y="278" text-anchor="middle" font-family="Arial" font-size="9" fill="#c2185b">💾 Stockage</text>
+  <text x="400" y="292" text-anchor="middle" font-family="Arial" font-size="8" fill="#e91e63">health_data_store[userId]</text>
+  
+  <!-- Étape 4: Réponse success -->
+  <line x1="400" y1="310" x2="165" y2="330" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="165,330 175,323 175,337" fill="#4caf50"/>
+  
+  <rect x="200" y="312" width="130" height="22" rx="4" fill="#e8f5e9"/>
+  <text x="265" y="327" text-anchor="middle" font-family="Arial" font-size="9" fill="#2e7d32">{"success": true}</text>
+  
+  <!-- Séparateur temps -->
+  <line x1="50" y1="365" x2="750" y2="365" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="400" y="380" text-anchor="middle" font-family="Arial" font-size="10" fill="#999" font-style="italic">⏱️ Polling toutes les 10 secondes</text>
+  
+  <!-- Étape 5: Dashboard fetch -->
+  <line x1="650" y1="400" x2="415" y2="420" stroke="#4facfe" stroke-width="2"/>
+  <polygon points="415,420 425,413 425,427" fill="#4facfe"/>
+  
+  <rect x="460" y="402" width="170" height="22" rx="4" fill="#e3f2fd"/>
+  <text x="545" y="417" text-anchor="middle" font-family="Arial" font-size="9" fill="#1565c0">GET /api/health/latest?userId=xxx</text>
+  
+  <!-- Étape 6: Backend récupère et formate -->
+  <rect x="340" y="430" width="120" height="30" rx="5" fill="#fce4ec"/>
+  <text x="400" y="450" text-anchor="middle" font-family="Arial" font-size="9" fill="#c2185b">Formatage données</text>
+  
+  <!-- Étape 7: Réponse avec données -->
+  <line x1="400" y1="465" x2="635" y2="485" stroke="#4caf50" stroke-width="2"/>
+  <polygon points="635,485 625,478 625,492" fill="#4caf50"/>
+  
+  <rect x="440" y="467" width="150" height="22" rx="4" fill="#e8f5e9"/>
+  <text x="515" y="482" text-anchor="middle" font-family="Arial" font-size="9" fill="#2e7d32">{"success": true, data: {...}}</text>
+  
+  <!-- Étape 8: Mise à jour UI -->
+  <rect x="590" y="495" width="120" height="30" rx="5" fill="#e1f5fe"/>
+  <text x="650" y="514" text-anchor="middle" font-family="Arial" font-size="9" fill="#0277bd">🔄 Mise à jour UI</text>
+  
+  <!-- Légende -->
+  <g transform="translate(50, 530)">
+    <line x1="0" y1="8" x2="30" y2="8" stroke="#667eea" stroke-width="2"/>
+    <text x="35" y="12" font-family="Arial" font-size="9" fill="#333">Requête</text>
+    
+    <line x1="100" y1="8" x2="130" y2="8" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="135" y="12" font-family="Arial" font-size="9" fill="#333">Réponse</text>
+    
+    <rect x="200" y="0" width="15" height="15" rx="2" fill="#fff8e1" stroke="#ffc107"/>
+    <text x="220" y="12" font-family="Arial" font-size="9" fill="#333">Payload</text>
+    
+    <rect x="290" y="0" width="15" height="15" rx="2" fill="#fce4ec"/>
+    <text x="310" y="12" font-family="Arial" font-size="9" fill="#333">Traitement</text>
+  </g>
+</svg>

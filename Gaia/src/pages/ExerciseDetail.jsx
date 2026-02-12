@@ -115,3 +115,4 @@ function ExerciseDetail({ onNavigate, exerciseId }) {
 }
 
 export default ExerciseDetail;
+

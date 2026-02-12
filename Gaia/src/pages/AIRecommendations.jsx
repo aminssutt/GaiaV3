@@ -28,33 +28,26 @@ function AIRecommendations({ onNavigate, healthHistory = [], onGenderChange }) {
     if (!data || data.length === 0) return null;
 
     const totals = data.reduce((acc, curr) => ({
+      steps: acc.steps + (curr.steps || 0),
+      calories: acc.calories + (curr.calories || 0),
+      distance: acc.distance + (curr.distance || 0),
+      sleepDuration: acc.sleepDuration + (curr.sleepDuration || 0),
       heartBeat: acc.heartBeat + (curr.heartBeat || 0),
-      tension: acc.tension + (curr.tension || 0),
-      temperature: acc.temperature + (parseFloat(curr.temperature) || 0),
-      fatigue: acc.fatigue + (curr.fatigue || 0),
-      cough: acc.cough + (curr.cough || 0),
-      ambiance: acc.ambiance + (curr.ambiance || 0),
-    }), { heartBeat: 0, tension: 0, temperature: 0, fatigue: 0, cough: 0, ambiance: 0 });
+    }), { steps: 0, calories: 0, distance: 0, sleepDuration: 0, heartBeat: 0 });
 
     const count = data.length;
     return {
+      steps: Math.round(totals.steps / count),
+      calories: Math.round(totals.calories / count),
+      distance: (totals.distance / count).toFixed(2),
+      sleepDuration: (totals.sleepDuration / count).toFixed(1),
       heartBeat: Math.round(totals.heartBeat / count),
-      tension: Math.round(totals.tension / count),
-      temperature: (totals.temperature / count).toFixed(1),
-      fatigue: Math.round(totals.fatigue / count),
-      cough: Math.round(totals.cough / count),
-      ambiance: Math.round(totals.ambiance / count),
     };
   };
 
   const generateRecommendations = async () => {
-    if (!userInfo) {
-      setError('Please complete your personal information first (in Exercises section)');
-      return;
-    }
-
     if (!healthAverages) {
-      setError('No health data available. Please run "Test Data" in Health Check first.');
+      setError('No health data available. Please sync your Google Fit data first in Connect Device.');
       return;
     }
 
@@ -62,15 +55,22 @@ function AIRecommendations({ onNavigate, healthHistory = [], onGenderChange }) {
     setError(null);
 
     try {
-      // Prepare data for AI
+      // Prepare data for AI with Google Fit data
       const requestData = {
         personal: {
-          age: userInfo.age,
-          height: userInfo.height,
-          weight: userInfo.weight,
-          gender: userInfo.gender || 'male',
+          age: userInfo?.age,
+          height: userInfo?.height,
+          weight: userInfo?.weight,
+          gender: userInfo?.gender || 'male',
         },
         healthAverages: healthAverages,
+        googleFitData: {
+          steps: healthAverages.steps,
+          calories: healthAverages.calories,
+          distance: healthAverages.distance,
+          sleepDuration: healthAverages.sleepDuration,
+          heartRate: healthAverages.heartBeat,
+        }
       };
 
       // Try to call the real backend API
@@ -397,3 +397,4 @@ function AIRecommendations({ onNavigate, healthHistory = [], onGenderChange }) {
 }
 
 export default AIRecommendations;
+

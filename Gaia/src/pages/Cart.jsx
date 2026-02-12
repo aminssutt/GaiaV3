@@ -103,3 +103,4 @@ export default function Cart({ items, onNavigate, onRemove, onUpdateQty, onCheck
     </div>
   );
 }
+

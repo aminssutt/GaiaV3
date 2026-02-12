@@ -59,7 +59,7 @@
 .bluetooth-connect-btn {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  background: linear-gradient(135deg,#5a4a6a,#6b5b7a);
   color: #fff;
   border: 2px solid #3b82f6;
   padding: 10px 20px 10px 14px;
@@ -75,3 +75,4 @@
 .bluetooth-connect-btn .bt-icon { filter: drop-shadow(0 0 4px rgba(255,255,255,0.4)); }
 .bluetooth-connect-btn:hover { transform: translateY(-5px) scale(1.035); box-shadow:0 16px 40px rgba(0,0,0,0.55); }
 .bluetooth-connect-btn:active { transform: translateY(-2px) scale(1.01); }
+

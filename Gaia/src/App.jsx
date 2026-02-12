@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
-import ConnectDevice from './pages/ConnectDevice'
 import HealthCheck from './pages/HealthCheck'
 import Exercises from './pages/Exercises'
 import Accessories from './pages/Accessories'
@@ -24,7 +24,7 @@ import AccessoryDetail from './pages/AccessoryDetail';
 import Toast from './components/Toast';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('main');
+  const [currentPage, setCurrentPage] = useState('welcome');
   const [pageContext, setPageContext] = useState(null);
   const [gender, setGender] = useState('male');
   const [cart, setCart] = useState([]);
@@ -63,6 +63,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'welcome':
+        return <WelcomePage onNavigate={handleNavigate} />;
       case 'main':
         return <MainPage onNavigate={handleNavigate} onGenderChange={handleGenderChange} gender={gender} />;
       case 'health':
@@ -98,8 +100,6 @@ function App() {
         return <NeckAvatarPreview onNavigate={handleNavigate} gender={gender} />;
       case 'shoesAvatarPreview':
         return <ShoesAvatarPreview onNavigate={handleNavigate} gender={gender} />;
-      case 'connectDevice':
-        return <ConnectDevice onNavigate={handleNavigate} />;
       case 'cart':
         return <Cart items={cart} onNavigate={handleNavigate} onCheckout={() => alert('Checkout simulation')} onRemove={removeFromCart} onUpdateQty={updateCartQty} openPayment={pageContext?.openPayment} />;
       case 'history':
@@ -116,17 +116,6 @@ function App() {
 
   return (
     <div className="app">
-      {currentPage === 'main' && (
-        <button
-          className="bluetooth-connect-btn"
-          onClick={() => handleNavigate('connectDevice')}
-          title="Connect your device"
-          style={{ position:'absolute', top: 18, right: 24, zIndex: 20 }}
-        >
-          <span className="bt-icon" style={{ fontSize:'1.25rem', marginRight:8 }}>🔵</span>
-          <span className="bt-label" style={{ fontWeight:600 }}>Connect your Device</span>
-        </button>
-      )}
       {renderPage()}
       <Toast
         visible={toast.visible}
@@ -139,3 +128,4 @@ function App() {
 }
 
 export default App
+

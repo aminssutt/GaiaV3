@@ -5,8 +5,6 @@ import { getUserInfo } from '../utils/userDataUtils'
 function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
   const [userInfo, setUserInfo] = useState({
     age: '',
-    weight: '',
-    height: '',
     gender: 'male'
   })
   const [errors, setErrors] = useState({})
@@ -18,8 +16,6 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
       if (existingInfo) {
         setUserInfo({
           age: existingInfo.age || '',
-          weight: existingInfo.weight || '',
-          height: existingInfo.height || '',
           gender: existingInfo.gender || 'male'
         })
       }
@@ -54,19 +50,7 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
     // Validate age
     const age = parseInt(userInfo.age)
     if (!userInfo.age || isNaN(age) || age < 1 || age > 120) {
-      newErrors.age = 'Please enter a valid age !'
-    }
-    
-    // Validate weight
-    const weight = parseFloat(userInfo.weight)
-    if (!userInfo.weight || isNaN(weight) || weight < 20 || weight > 150) {
-      newErrors.weight = 'Please enter a valid weight !'
-    }
-    
-    // Validate height
-    const height = parseFloat(userInfo.height)
-    if (!userInfo.height || isNaN(height) || height < 100 || height > 250) {
-      newErrors.height = 'Please enter a valid height !'
+      newErrors.age = 'Please enter a valid age (1-120) !'
     }
     
     setErrors(newErrors)
@@ -77,8 +61,6 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
     if (validateInputs()) {
       onConfirm({
         age: parseInt(userInfo.age),
-        weight: parseFloat(userInfo.weight),
-        height: parseFloat(userInfo.height),
         gender: userInfo.gender
       })
       onClose()
@@ -86,7 +68,7 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
   }
 
   const handleCancel = () => {
-    setUserInfo({ age: '', weight: '', height: '', gender: 'male' })
+    setUserInfo({ age: '', gender: 'male' })
     setErrors({})
     onClose()
   }
@@ -97,10 +79,9 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
     <div className="user-info-overlay">
       <div className="user-info-popup">
         <div className="popup-header">
-          <h2>Personal informations</h2>
+          <h2>Personal Information</h2>
           <p className="popup-description">
-          To better understand and accurately analyze your habits,
-          we need some personal information.
+          Please provide your age and gender. Weight and height will be synced automatically from Google Fit.
           </p>
         </div>
 
@@ -141,37 +122,6 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
             {errors.age && <span className="error-message">{errors.age}</span>}
           </div>
 
-          <div className="input-group">
-            <label htmlFor="weight">Weight (kg)</label>
-            <input
-              id="weight"
-              type="number"
-              step="0.1"
-              value={userInfo.weight}
-              onChange={(e) => handleInputChange('weight', e.target.value)}
-              placeholder="Ex: 70.5"
-              className={errors.weight ? 'error' : ''}
-              autoComplete="off"
-              inputMode="decimal"
-            />
-            {errors.weight && <span className="error-message">{errors.weight}</span>}
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="height">Height (cm)</label>
-            <input
-              id="height"
-              type="number"
-              step="0.1"
-              value={userInfo.height}
-              onChange={(e) => handleInputChange('height', e.target.value)}
-              placeholder="Ex: 175.0"
-              className={errors.height ? 'error' : ''}
-              autoComplete="off"
-              inputMode="decimal"
-            />
-            {errors.height && <span className="error-message">{errors.height}</span>}
-          </div>
         </div>
 
         <div className="popup-actions">
@@ -188,3 +138,5 @@ function UserInfoPopup({ isVisible, onClose, onConfirm, onGenderChange }) {
 }
 
 export default UserInfoPopup
+
+

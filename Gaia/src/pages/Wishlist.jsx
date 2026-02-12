@@ -38,3 +38,4 @@ export default function Wishlist({ items, onNavigate, onPurchase, onRemove }) {
     </div>
   );
 }
+
